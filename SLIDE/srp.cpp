@@ -4,8 +4,9 @@
 #include <cmath>
 
 using namespace std;
+#pragma once
 
-SparseRandomProjection::SparseRandomProjection(size_t dimension, size_t numOfHashes, int ratio) {
+SparseRandomProjection::SparseRandomProjection(int dimension, int numOfHashes, int ratio) {
     _dim = dimension;
     _numhashes = numOfHashes;
     _samSize = ceil(1.0*_dim / ratio);
@@ -43,7 +44,7 @@ int *SparseRandomProjection::getHash(float *vector, int length) {
     int *hashes = new int[_numhashes];
 
  // #pragma omp parallel for
-    for (size_t i = 0; i < _numhashes; i++) {
+    for (int i = 0; i < _numhashes; i++) {
         double s = 0;
         for (size_t j = 0; j < _samSize; j++) {
             float v = vector[_indices[i][j]];
@@ -59,13 +60,13 @@ int *SparseRandomProjection::getHash(float *vector, int length) {
 }
 
 
-int *SparseRandomProjection::getHashSparse(int* indices, float *values, size_t length) {
+int *SparseRandomProjection::getHashSparse(int* indices, float *values, int length) {
     int *hashes = new int[_numhashes];
 
-    for (size_t p = 0; p < _numhashes; p++) {
+    for (int p = 0; p < _numhashes; p++) {
         double s = 0;
-        size_t i = 0;
-        size_t j = 0;
+        int i = 0;
+        int j = 0;
         while (i < length & j < _samSize) {
             if (indices[i] == _indices[p][j]) {
                 float v = values[i];

@@ -47,13 +47,14 @@ void DensifiedMinhash::getMap(int n, int* binids)
     int range = 1 << _rangePow;
     // binsize is the number of times the range is larger than the total number of hashes we need.
     int binsize = ceil(1.0*range / _numhashes);
-    for (int i = 0; i < n; i++)
+    for (size_t i = 0; i < n; i++)
     {
         unsigned int h = i;
         h *= _randa;
         h ^= h >> 13;
         h *= 0x85ebca6b;
 //        unsigned int curhash = (unsigned int)(((unsigned int)h*i) << 5);
+        int tmp = i;
         uint32_t curhash = MurmurHash ((char *)&i, (uint32_t) sizeof(i), (uint32_t)_randa);
         curhash = curhash & ((1<<_rangePow)-1);
         binids[i] = (int)floor(curhash / binsize);;
@@ -70,12 +71,12 @@ int * DensifiedMinhash::getHashEasy(int* binids, float* data, int dataLen, int t
 
     priority_queue<PAIR, vector<PAIR>, cmp> pq;
 
-    for (int i = 0; i < topK; i++)
+    for (size_t i = 0; i < topK; i++)
     {
         pq.push(std::make_pair(i,data[i]));
     }
 
-    for (int i = topK; i < dataLen; i++)
+    for (size_t i = topK; i < dataLen; i++)
     {
         pq.push(std::make_pair(i,data[i]));
         pq.pop();
@@ -87,13 +88,13 @@ int * DensifiedMinhash::getHashEasy(int* binids, float* data, int dataLen, int t
     //float *values = new float[_numhashes];
     int *hashArray = new int[_numhashes];
 
-    for (int i = 0; i < _numhashes; i++)
+    for (size_t i = 0; i < _numhashes; i++)
     {
         hashes[i] = INT_MIN;
     }
 
 
-    for (int i = 0; i < topK; i++)
+    for (size_t i = 0; i < topK; i++)
     {
         PAIR pair = pq.top();
         pq.pop();
@@ -105,7 +106,7 @@ int * DensifiedMinhash::getHashEasy(int* binids, float* data, int dataLen, int t
     }
 
 
-    for (int i = 0; i < _numhashes; i++)
+    for (size_t i = 0; i < _numhashes; i++)
     {
         int next = hashes[i];
         if (next != INT_MIN)
@@ -137,7 +138,7 @@ int * DensifiedMinhash::getHash(int* indices, float* data, int* binids, int data
     int *hashes = new int[_numhashes];
     int *hashArray = new int[_numhashes];
 
-    for (int i = 0; i < _numhashes; i++)
+    for (size_t i = 0; i < _numhashes; i++)
     {
         hashes[i] = INT_MIN;
     }
@@ -146,7 +147,7 @@ int * DensifiedMinhash::getHash(int* indices, float* data, int* binids, int data
 
     }
 
-    for (int i = 0; i < dataLen; i++)
+    for (size_t i = 0; i < dataLen; i++)
     {
         int binid = binids[indices[i]];
 
@@ -155,7 +156,7 @@ int * DensifiedMinhash::getHash(int* indices, float* data, int* binids, int data
         }
     }
 
-    for (int i = 0; i < _numhashes; i++)
+    for (size_t i = 0; i < _numhashes; i++)
     {
         int next = hashes[i];
         if (next != INT_MIN)

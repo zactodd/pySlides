@@ -4,6 +4,7 @@
 #include <climits>
 #include "Config.h"
 #include <chrono>
+#pragma once
 
 using namespace std;
 
@@ -23,7 +24,7 @@ LSH::LSH(int K, int L, int RangePow)
 	rand1 = new int[_K*_L];
 
 	std::random_device rd;
-	std::mt19937 gen(rd());
+	 std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dis(1, INT_MAX);
 
 //#pragma omp parallel for
@@ -107,6 +108,7 @@ int* LSH::add(int *indices, int id)
 		secondIndices[i] = _bucket[i][indices[i]].add(id);
 	}
 
+
 	return secondIndices;
 }
 
@@ -124,6 +126,7 @@ int LSH::add(int tableId, int indices, int id)
 int** LSH::retrieveRaw(int *indices)
 {
 	int ** rawResults = new int*[_L];
+	int count = 0;
 
 	for (int i = 0; i < _L; i++)
 	{
@@ -141,9 +144,10 @@ int LSH::retrieve(int table, int indices, int bucket)
 LSH::~LSH()
 {
 	delete [] rand1;
-	 for (int i = 0; i < _L; i++)
+	 for (size_t i = 0; i < _L; i++)
 	 {
 	 	delete[] _bucket[i];
 	 }
 	 delete[] _bucket;
 }
+
