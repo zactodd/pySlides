@@ -59,7 +59,7 @@ void LSH::count()
 			total += _bucket[j][i].getSize();
 		}
 		cout << endl;
-		cout <<"TABLE "<< j << "Total "<< total << endl;
+		cout << "TABLE " << j << "Total " << total << endl;
 	}
 }
 

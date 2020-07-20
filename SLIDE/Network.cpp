@@ -116,7 +116,7 @@ int Network::predictClass(int **inputIndices, float **inputValues, int *length, 
     }
     auto t2 = std::chrono::high_resolution_clock::now();
     int timeDiffInMiliseconds = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
-    std::cout << "Inference " <<" takes" << 1.0 * timeDiffInMiliseconds << std::endl;
+    std::cout << "Inference takes: " << 1.0 * timeDiffInMiliseconds << std::endl;
 
     return correctPred;
 }

@@ -303,7 +303,7 @@ void EvalDataSVM(int numBatchesTest,  Network* _mynet, int iter){
 
         auto correctPredict = _mynet->predictClass(records, values, sizes, labels, labelsize);
         totCorrect += correctPredict;
-        std::cout <<" iter "<< i<<" "<< totCorrect*1.0/(Batchsize*(i+1))<<std::endl;
+        std::cout <<" iter "<< i << ":" << totCorrect * 1.0 / (Batchsize * (i + 1)) << std::endl;
 
         delete[] sizes;
         delete[] labels;
@@ -316,8 +316,8 @@ void EvalDataSVM(int numBatchesTest,  Network* _mynet, int iter){
 
     }
     testfile.close();
-    cout << "over all" << totCorrect * 1.0 / (numBatchesTest*Batchsize)<< endl;
-    outputFile << iter<<" " <<globalTime/1000 << " " << totCorrect * 1.0 / (numBatchesTest*Batchsize) << endl;
+    cout << "over all: " << totCorrect * 1.0 / (numBatchesTest * Batchsize) << endl;
+    outputFile << iter << " " << globalTime / 1000 << " " << totCorrect * 1.0 / (numBatchesTest * Batchsize) << endl;
 
 }
 
